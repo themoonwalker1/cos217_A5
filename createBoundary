@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Get the directory of the script
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Create a temporary directory for testing in the script directory
+test_dir="$script_dir"
+mkdir -p "$test_dir"
+
+# Display the content of the temporary directory
+echo "Content of the temporary directory:"
+ls -l "$test_dir"
+echo
+
+# Test boundary cases with the wc command
+echo "Boundary cases for the wc command:"
+
+# Case 1: Empty file
+echo -e "\n=== Case 1: Empty file ==="
+touch "$test_dir/mywc_empty_file.txt"
+wc "$test_dir/mywc_empty_file.txt"
+echo
+
+# Case 2: Single line file
+echo -e "=== Case 2: Single line file ==="
+echo "This is a single line." > "$test_dir/mywc_single_line_file.txt"
+wc "$test_dir/mywc_single_line_file.txt"
+echo
+
+# Case 3: Multiple lines file
+echo -e "=== Case 3: Multiple lines file ==="
+echo -e "Line 1\nLine 2\nLine 3" > "$test_dir/mywc_multiple_lines_file.txt"
+wc "$test_dir/mywc_multiple_lines_file.txt"
+echo
+
+# Case 4: Binary file
+echo -e "=== Case 4: Binary file ==="
+echo -e "\x01\x02\x03\x04\x05" > "$test_dir/mywc_binary_file.txt"
+wc "$test_dir/mywc_binary_file.txt"
+echo
+
+# Case 5: UTF-8 file
+echo -e "=== Case 5: UTF-8 file ==="
+echo -e "This is UTF-8 text: こんにちは" > "$test_dir/mywc_utf8_file.txt"
+wc "$test_dir/mywc_utf8_file.txt"
+echo
+
+# Case 6: Byte count only
+echo -e "=== Case 6: Byte count only ==="
+wc -c "$test_dir/mywc_multiple_lines_file.txt"
+echo
+
+# Case 7: Word count only
+echo -e "=== Case 7: Word count only ==="
+wc -w "$test_dir/mywc_multiple_lines_file.txt"
+echo
+
+# Case 8: Line count only
+echo -e "=== Case 8: Line count only ==="
+wc -l "$test_dir/mywc_multiple_lines_file.txt"
+echo
+
+# Case 9: Mixed empty lines
+echo -e "=== Case 9: Mixed empty lines ==="
+echo -e "Line 1\n\nLine 3\n\n\nLine 6" > "$test_dir/mywc_mixed_empty_lines_file.txt"
+wc "$test_dir/mywc_mixed_empty_lines_file.txt"
+echo
+
+# Case 10: Mixed spaces and tabs
+echo -e "=== Case 10: Mixed spaces and tabs ==="
+echo -e "Line 1 with spaces\nLine 2\twith\ttabs" > "$test_dir/mywc_mixed_spaces_tabs_file.txt"
+wc "$test_dir/mywc_mixed_spaces_tabs_file.txt"
+echo
+
+# Display the content of the script directory after creating test files
+echo -e "\nContent of the script directory:"
+ls -l "$script_dir"
+echo

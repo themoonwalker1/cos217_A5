@@ -65,9 +65,10 @@ whileCharLoop:
         ldr     x0, [x0]
         bl      getchar
 
-        // if (iChar == EOF) goto endWhileCharLoop;
+        // if (iChar == EOF) goto endWhileCharLoop
         cmp     x0, EOF
-        beq     endWhileCharLoop
+        beq     endWhileCharLoop;
+        b       printf
 
         // lCharCount++;
         adr     x1, lCharCount;
