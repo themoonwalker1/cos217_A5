@@ -9,7 +9,9 @@
 /*--------------------------------------------------------------------*/
 
 /* In lieu of a boolean data type. */
-enum {FALSE, TRUE};
+enum {
+    FALSE, TRUE
+};
 
 /*--------------------------------------------------------------------*/
 
@@ -25,33 +27,27 @@ static int iInWord = FALSE;      /* Bad style. */
    are in stdin. A word is a sequence of non-whitespace characters.
    Whitespace is defined by the isspace() function. Return 0. */
 
-int main(void)
-{
-   while ((iChar = getchar()) != EOF)
-   {
-      lCharCount++;
+int main(void) {
+    while ((iChar = getchar()) != EOF) {
+        lCharCount++;
 
-      if (isspace(iChar))
-      {
-         if (iInWord)
-         {
-            lWordCount++;
-            iInWord = FALSE;
-         }
-      }
-      else
-      {
-         if (! iInWord)
-            iInWord = TRUE;
-      }
+        if (isspace(iChar)) {
+            if (iInWord) {
+                lWordCount++;
+                iInWord = FALSE;
+            }
+        } else {
+            if (!iInWord)
+                iInWord = TRUE;
+        }
 
-      if (iChar == '\n')
-         lLineCount++;
-   }
+        if (iChar == '\n')
+            lLineCount++;
+    }
 
-   if (iInWord)
-      lWordCount++;
+    if (iInWord)
+        lWordCount++;
 
-   printf("%7ld %7ld %7ld\n", lLineCount, lWordCount, lCharCount);
-   return 0;
+    printf("%7ld %7ld %7ld\n", lLineCount, lWordCount, lCharCount);
+    return 0;
 }

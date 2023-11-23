@@ -45,87 +45,123 @@ iChar:
         //--------------------------------------------------------------
 
         // Must be a multiple of 16
-        .equ    MAIN_STACK_BYTECOUNT, 64
+        .equ    MAIN_STACK_BYTECOUNT, 16
+
         .equ    EOF, -1
+        .equ    FALSE, 0
+        .equ    TRUE, 1
 
         .global main
 
 
 main:
+        // Prolog
+        sub     sp, sp, MAIN_STACK_BYTECOUNT
+        str     x30, [sp]
+
 whileCharLoop:
-        ldr     x0, =iChar
+        // iChar = getchar();
+        adr     x0, iChar
+        ldr     x0, [x0]
         bl      getchar
-        cmp     x0, #EOF
+
+        // if (iChar == EOF) goto endWhileCharLoop;
+        cmp     x0, EOF
         beq     endWhileCharLoop
 
-        ldr     x1, =lCharCount
+        // lCharCount++;
+        adr     x1, lCharCount;
         ldr     x2, [x1]
-        add     x2, x2, 1
-        str     x2, [x1]
+        add     x2, x2, #1
+        str     x2, [x1];
 
-        ldr     x3, =iChar
-        ldr     x3, [x3]
+        // if (!isspace(iChar)) goto else1;
+        mov     x3, x0
         bl      isspace
-        cmp     x0, #0
+        cmp     x0, TRUE
         bne     else1
 
-        ldr     x4, =iInWord
-        ldr     x4, [x4]
-        cmp     x4, #0
-        beq     endIf2
+        // if (!iInWord) goto endIf2;
+        adr     x4, iInWord
+        ldr     x5, [x4]
+        cmp     x5, TRUE
+        bne     endIf2
 
-        ldr     x5, =lWordCount
-        ldr     x6, [x5]
-        add     x6, x6, 1
-        str     x6, [x5]
+        // lWordCount++;
+        adr     x4, lWordCount
+        ldr     x5, [x4]
+        add     x5, x5, #1
+        str     x5, [x4]
 
-        ldr     x4, =iInWord
-        str     xzr, [x4]
+        // iInWord = FALSE;
+        adr     x4, iInWord
+        ldr     x5, [x4]
+        mov     x5, FALSE
+        str     x5, [x4]
+
 endIf2:
-        b       else1
+        // goto endIf1;
+        b       endIf1
 
 else1:
-        ldr     x7, =iInWord
-        ldr     x7, [x7]
-        cmp     x7, #0
-        bne     endIf3
+        // if (iInWord) goto endIf3;
+        adr     x4, iInWord
+        ldr     x5, [x4]
+        cmp     x5, TRUE
+        beq     endIf3;
 
-        ldr     x8, =iInWord
-        str     #1, [x8]
+        // iInWord = TRUE;
+        mov     x5, TRUE
+        str     x5, [x4]
+
 endIf3:
-
-        ldr     x3, =iChar
-        ldr     x3, [x3]
-        cmp     x3, #'\n'
+endIf1:
+        // if (iChar != '\n') goto endIf4;
+        mov     x0, x3
+        cmp     x0, '\n'        // CAN WE PUT \n LIKE THIS?????
         bne     endIf4
 
-        ldr     x9, =lLineCount
-        ldr     x10, [x9]
-        add     x10, x10, 1
-        str     x10, [x9]
-endIf4:
+        // lLineCount++;
+        adr     x4, lLineCount
+        ldr     x5, [x4]
+        add     x5, x5, #1
+        str     x5, [x4]
 
-        b       whileCharLoop
+endIf4:
+        // goto whileCharLoop;
+        b       whileCharLoop;
 
 endWhileCharLoop:
-        ldr     x11, =iInWord
-        ldr     x11, [x11]
-        cmp     x11, #0
-        beq     endIf5
+        // if (!iInWord) goto endIf5;
+        adr     x4, iInWord
+        ldr     x5, [x4]
+        cmp     x5, TRUE
+        bne     endIf5;
 
-        ldr     x12, =lWordCount
-        ldr     x13, [x12]
-        add     x13, x13, 1
-        str     x13, [x12]
+        // lWordCount++;
+        adr     x4, lWordCount
+        ldr     x5, [x4]
+        add     x5, x5, #1
+        str     x5, [x4]
+
 endIf5:
-
-        ldr     x14, =lLineCount
-        ldr     x15, [x14]
-        ldr     x16, =lWordCount
-        ldr     x17, [x16]
-        ldr     x18, =lCharCount
-        ldr     x19, [x18]
-        ldr     x20, =printfFormatStr
+        // printf("%7ld %7ld %7ld\n", lLineCount, lWordCount, lCharCount);
+        adr     x0, wordCountResultFormatStr
+        adr     x1, lLineCount
+        adr     x2, lWordCount
+        adr     x3, lCharCount
+        ldr     x1, [x1]
+        ldr     x2, [x2]
+        ldr     x3, [x3]
         bl      printf
-        mov     x0, #0
+
+        // Epilog & return 0
+        mov     w0, 0
+        ldr     x30, [sp]
+        add     sp, sp, MAIN_STACK_BYTECOUNT
         ret
+
+        .size   main, (. - main)
+
+
+
