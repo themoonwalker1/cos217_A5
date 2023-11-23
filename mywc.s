@@ -61,13 +61,11 @@ main:
 
 whileCharLoop:
         // iChar = getchar();
-        adr     x0, iChar
-        ldr     x0, [x0]
+        adr     x1, iChar
         bl      getchar
+        str     x0, [x1]
 
-        // DEBUG: Print iChar after getchar()
-        adr     x4, iChar
-        ldr     x5, [x4]
+        // DEBUG
         bl      putchar
 
         // if (iChar == EOF) goto endWhileCharLoop
