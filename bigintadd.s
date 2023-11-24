@@ -172,7 +172,7 @@ startForLoop:
         // ulSum += oAddend1->aulDigits[lIndex];
         ldr     x0, [sp, ULSUM]
         ldr     x1, [sp, OADDEND1]
-        ldr     x1, [x1, AULDIGITS]
+        add     x1, x1, AULDIGITS
         ldr     x2, [sp, LINDEX]
         ldr     x1, [x1, x2, LSL #3]
         add     x0, x0, x1
@@ -181,7 +181,7 @@ startForLoop:
         // if (ulSum >= oAddend1->aulDigits[lIndex]) goto if3;
         ldr     x0, [sp, ULSUM]
         ldr     x1, [sp, OADDEND1]
-        ldr     x1, [x1, AULDIGITS]
+        add     x1, x1, AULDIGITS
         ldr     x2, [sp, LINDEX]
         ldr     x1, [x1, x2, LSL #3]
         cmp     x0, x1
@@ -195,7 +195,7 @@ if3:
         // ulSum += oAddend2->aulDigits[lIndex];
         ldr     x0, [sp, ULSUM]
         ldr     x1, [sp, OADDEND2]
-        ldr     x1, [x1, AULDIGITS]
+        add     x1, x1, AULDIGITS
         ldr     x2, [sp, LINDEX]
         ldr     x1, [x1, x2, LSL #3]
         add     x0, x0, x1
@@ -204,7 +204,7 @@ if3:
         // if (ulSum >= oAddend2->aulDigits[lIndex]) goto if4;
         ldr     x0, [sp, ULSUM]
         ldr     x1, [sp, OADDEND2]
-        ldr     x1, [x1, AULDIGITS]
+        add     x1, x1, AULDIGITS
         ldr     x2, [sp, LINDEX]
         ldr     x1, [x1, x2, LSL #3]
         cmp     x0, x1
@@ -218,7 +218,7 @@ if4:
         // oSum->aulDigits[lIndex] = ulSum;
         ldr     x0, [sp, ULSUM]
         ldr     x1, [sp, OSUM]
-        ldr     x1, [x1, AULDIGITS]
+        add     x1, x1, AULDIGITS
         ldr     x2, [sp, LINDEX]
         str     x0, [x1, x2, LSL #3]
 
@@ -251,7 +251,7 @@ if6:
         // oSum->aulDigits[lSumLength] = 1;
         mov     x0, 1
         ldr     x1, [sp, OSUM]
-        ldr     x1, [x1, AULDIGITS]
+        add     x1, x1, AULDIGITS
         ldr     x2, [sp, LSUMLENGTH]
         str     x0, [x1, x2, LSL #3]
 
