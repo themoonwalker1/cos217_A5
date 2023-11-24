@@ -140,7 +140,7 @@ BigInt_add:
         ldr     x0, [x0, AULDIGITS]
         mov     x1, #0
         mov     x2, MAX_DIGITS
-        lsl     x2, 3 // HOW TO DO THIS???
+        lsl     x2, x2, 3
         bl      memset
 
 if2:
@@ -236,7 +236,7 @@ endForLoop:
 
         // if (lSumLength != MAX_DIGITS) goto if6;
         ldr     x0, [sp, LSUMLENGTH]
-        cmp     x0, MAXDIGITS
+        cmp     x0, MAX_DIGITS
         bne     if6
 
         // Epilog & return FALSE;
