@@ -61,12 +61,9 @@ main:
 
 whileCharLoop:
         // iChar = getchar();
-        adr     x1, iChar
+        adr     x0, iChar
+        ldr     x0, [x0]
         bl      getchar
-        str     x0, [x1]
-
-        // DEBUG
-        bl      putchar
 
         // if (iChar == EOF) goto endWhileCharLoop
         cmp     x0, EOF
