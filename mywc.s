@@ -66,7 +66,7 @@ whileCharLoop:
         bl      getchar
 
         // if (iChar == EOF) goto endWhileCharLoop
-        cmp     w0, #EOF
+        cmp     w0, EOF
         beq     endWhileCharLoop
 
         // lCharCount++;
@@ -78,8 +78,8 @@ whileCharLoop:
         // if (!isspace(iChar)) goto else1;
         mov     w3, w0
         bl      isspace
-        cmp     x0, TRUE
-        bne     else1
+        cmp     x0, FALSE
+        beq     else1
 
         // if (!iInWord) goto endIf2;
         adr     x4, iInWord
