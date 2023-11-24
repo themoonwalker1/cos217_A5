@@ -4,7 +4,7 @@ GCC = gcc217
 all: fibc fibs
 
 clean:
-	rm -f *.o fibs fibc meminfo*.out
+	rm -f *.o fibs fibc meminfo*.out *.gch
 
 fibc: fib.o bigintadd.o bigint.o
 	$(GCC) fib.o bigintadd.o bigint.o -o fibc

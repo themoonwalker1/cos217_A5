@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for i in {1..2500}
+do
+    output_fibc=$(./fibc $i)
+    output_fibs=$(./fibs $i)
+
+    if [ "$output_fibc" != "$output_fibs" ]; then
+        echo "Difference at input $i:"
+        diff <(echo "$output_fibc") <(echo "$output_fibs")
+    fi
+done
