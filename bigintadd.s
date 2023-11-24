@@ -106,6 +106,7 @@ if1:
         .equ    LLENGTH, 0
         .equ    AULDIGITS, 8
 
+        .global BigInt_add
 BigInt_add:
         // Prolog
         sub     sp, sp, ADD_STACK_BYTECOUNT
