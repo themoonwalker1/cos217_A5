@@ -3,12 +3,12 @@ Assignment 5 readme File
 ------------------------------------------------------------------------
 Student 1: What is your name?
 
-
+Praneeth Bhandaru
 
 ------------------------------------------------------------------------
 Student 2: What is your name?
 
-
+N/A
 
 ------------------------------------------------------------------------
 Student 1: What authorized sources of information did you use to
@@ -17,7 +17,16 @@ information given in the "Policies" web page (also available on armlab
 in the file ~cos217/AuthorizedSourcesList ) to this section of the
 readme file, and edit it as appropriate.
 
+The course's lectures.
 
+The course's precepts.
+
+The course's website.
+
+Documents that are referenced directly by the course's website. Such
+documents include the course's lecture slides and precept handouts.
+
+Professor Moretti
 
 ------------------------------------------------------------------------
 Student 2: What authorized sources of information did you use to
@@ -26,7 +35,7 @@ information given in the "Policies" web page (also available on armlab
 in the file ~cos217/AuthorizedSourcesList ) to this section of the
 readme file, and edit it as appropriate.
 
-
+N/A
 
 ------------------------------------------------------------------------
 Student 1: What unauthorized sources of information did you use to
@@ -40,7 +49,7 @@ nature of the interaction, may additionally require the interaction
 being reported to the Committee on Discipline. Write "None" if you used
 no unauthorized sources of information.
 
-
+None
 
 ------------------------------------------------------------------------
 Student 2: What unauthorized sources of information did you use to
@@ -54,7 +63,7 @@ nature of the interaction, may additionally require the interaction
 being reported to the Committee on Discipline. Write "None" if you used
 no unauthorized sources of information.
 
-
+N/a
 
 ------------------------------------------------------------------------
 Student 1: What is your assessment of the assignment? Was it helpful?
@@ -77,6 +86,55 @@ particular, what bugs are in your submission?
 
 ------------------------------------------------------------------------
 What is your mywc program test plan?
+
+Boundary:
+    - mywc_empty_file.txt: Empty File (only EOF), tests minimum possible
+                           file length.
+    - mywc_max_chars_file.txt: File with 50000 printable ASCII
+                               characters, tests maximum possible file
+                               length.
+    - mywc_max_lines_max_chars.txt: File with 1000 lines and ~50000
+                                    printable ASCII characters, tests
+                                    maximum possible file length.
+    - mywc_single_char_file.txt: File with 1 char, tests counting a
+                                 single character.
+    - mywc_single_word_file.txt: File with 1 word, tests counting a
+                                 single word.
+    - mywc_single_line_file.txt: File with 1 line, tests counting a
+                                 single line.
+    - mywc_special_chars_file.txt: File with only printable ASCII
+                                   special characters, tests printing
+                                   non-letter and non-number characters.
+
+Statement:
+    - mywc_empty_file.txt: Empty File (only EOF)
+        mywc.c: line 30
+        mywc.s: lines 63-70
+    - mywc_single_char_file.txt: File with 1 char
+        mywc.c: line 32
+        mywc.s: lines 72-76
+    - mywc_multi_word_file.txt: File with multiple words in one line
+        mywc.c: lines 34-46
+        mywc.s: lines 78-115
+    - mywc_multi_line_file.txt: File with words in multiple lines
+        mywc.c: lines 48-49
+        mywc.s: lines 119-128
+    - mywc_single_word_file.txt: File with 1 word
+        mywc.c: lines 52-56
+        mywc.s: lines 134-164
+
+Stress:
+    - mywc_multi_word_max_chars_file.txt: File with ~50000 printable
+                                          ASCII characters with 27+
+                                          spaces, tests very long
+                                          "words".
+    - mywc_max_chars_file.txt: File with 50000 printable ASCII
+                               characters, tests maximum possible file
+                               length (characters in one line).
+    - mywc_max_lines_max_chars.txt: File with 1000 lines and ~50000
+                                    printable ASCII characters, tests
+                                    maximum possible file length (lines
+                                    and characters).
 
 
 
