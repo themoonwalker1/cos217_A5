@@ -2,8 +2,6 @@
 // mywc.s
 // Author: Praneeth Bhandaru
 //----------------------------------------------------------------------
-        .include "bigint.h"
-        .include "bigintprivate.h"
 
         .section .rodata
 
@@ -27,6 +25,7 @@
 
         .equ    FALSE, 0
         .equ    TRUE, 1
+        .equ    MAX_DIGITS, 32768
 
         //--------------------------------------------------------------
         // Return the larger of lLength1 and lLength2.
