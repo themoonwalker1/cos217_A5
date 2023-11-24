@@ -66,7 +66,7 @@ whileCharLoop:
         bl      getchar
 
         // if (iChar == EOF) goto endWhileCharLoop
-        cmp     x0, EOF
+        cmp     x0, #EOF
         beq     endWhileCharLoop
 
         // lCharCount++;
