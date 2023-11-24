@@ -2,6 +2,8 @@
 // mywc.s
 // Author: Praneeth Bhandaru
 //----------------------------------------------------------------------
+        .include "bigint.h"
+        .include "bigintprivate.h"
 
         .section .rodata
 
