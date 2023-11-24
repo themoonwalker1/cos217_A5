@@ -127,7 +127,7 @@ BigInt_add:
         ldr     x1, [sp, OADDEND2]
         ldr     x1, [x1, LLENGTH]
         bl      BigInt_larger
-        str     x0, [SP, LSUMLENGTH]
+        str     x0, [sp, LSUMLENGTH]
 
         // if (oSum->lLength <= lSumLength) goto if2;
         ldr     x0, [sp, OSUM]
