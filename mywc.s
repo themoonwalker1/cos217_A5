@@ -62,11 +62,11 @@ main:
 whileCharLoop:
         // iChar = getchar();
         adr     x0, iChar
-        ldr     x0, [x0]
+        ldr     w0, [x0]
         bl      getchar
 
         // if (iChar == EOF) goto endWhileCharLoop
-        cmp     x0, #EOF
+        cmp     w0, #EOF
         beq     endWhileCharLoop
 
         // lCharCount++;
@@ -76,15 +76,15 @@ whileCharLoop:
         str     x2, [x1];
 
         // if (!isspace(iChar)) goto else1;
-        mov     x3, x0
+        mov     w3, w0
         bl      isspace
         cmp     x0, TRUE
         bne     else1
 
         // if (!iInWord) goto endIf2;
         adr     x4, iInWord
-        ldr     x5, [x4]
-        cmp     x5, TRUE
+        ldr     w5, [x4]
+        cmp     w5, TRUE
         bne     endIf2
 
         // lWordCount++;
@@ -95,9 +95,9 @@ whileCharLoop:
 
         // iInWord = FALSE;
         adr     x4, iInWord
-        ldr     x5, [x4]
-        mov     x5, FALSE
-        str     x5, [x4]
+        ldr     w5, [x4]
+        mov     w5, FALSE
+        str     w5, [x4]
 
 endIf2:
         // goto endIf1;
@@ -106,19 +106,19 @@ endIf2:
 else1:
         // if (iInWord) goto endIf3;
         adr     x4, iInWord
-        ldr     x5, [x4]
-        cmp     x5, TRUE
+        ldr     w5, [x4]
+        cmp     w5, TRUE
         beq     endIf3;
 
         // iInWord = TRUE;
-        mov     x5, TRUE
-        str     x5, [x4]
+        mov     w5, TRUE
+        str     w5, [x4]
 
 endIf3:
 endIf1:
         // if (iChar != '\n') goto endIf4;
-        mov     x0, x3
-        cmp     x0, '\n'        // CAN WE PUT \n LIKE THIS?????
+        mov     w0, w3
+        cmp     w0, '\n'        // CAN WE PUT \n LIKE THIS?????
         bne     endIf4
 
         // lLineCount++;
@@ -134,8 +134,8 @@ endIf4:
 endWhileCharLoop:
         // if (!iInWord) goto endIf5;
         adr     x4, iInWord
-        ldr     x5, [x4]
-        cmp     x5, TRUE
+        ldr     w5, [x4]
+        cmp     w5, TRUE
         bne     endIf5;
 
         // lWordCount++;
