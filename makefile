@@ -7,7 +7,7 @@ clean:
 	rm -f *.o fibs fibc fibso fibsoo meminfo*.out *.gch
 
 fibc: fib.c bigintadd.c bigint.c
-	$(GCC) fib.o bigintadd.o bigint.o -o fibc
+	$(GCC) fib.c bigintadd.c bigint.c -o fibc
 
 fibs: fib.c bigintadd.s bigint.c
 	$(GCC) -D NDEBUG -O fib.c bigintadd.s bigint.c -o fibs
