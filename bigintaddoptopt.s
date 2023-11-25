@@ -28,50 +28,6 @@
         .equ    MAX_DIGITS, 32768
 
         //--------------------------------------------------------------
-        // Return the larger of lLength1 and lLength2.
-        //
-        // static long BigInt_larger(long lLength1, long lLength2)
-        //--------------------------------------------------------------
-
-        // Must be a multiple of 16
-        .equ    LARGER_STACK_BYTECOUNT, 32
-
-        // Local Variable offsets
-        LLARGER     .req x21 // Callee-saved
-
-BigInt_larger:
-        // Prolog
-        sub     sp, sp, LARGER_STACK_BYTECOUNT
-        str     x30, [sp]
-        str     x19, [sp, 8]
-        str     x20, [sp, 16]
-        str     x21, [sp, 24]
-
-        // long lLarger;
-
-        // if (lLength1 <= lLength2) goto else1;
-        cmp     x0, x1
-        bls     else1
-
-        // goto if1;
-        b       if1
-
-else1:
-        // lLarger = lLength2;
-        mov     x0, x1
-
-if1:
-        // Epilog & return lLarger;
-        ldr     x21, [sp, 24]
-        ldr     x20, [sp, 16]
-        ldr     x19, [sp, 8]
-        ldr     x30, [sp]
-        add     sp, sp, LARGER_STACK_BYTECOUNT
-        ret
-
-        .size   BigInt_larger, (. - BigInt_larger)
-
-        //--------------------------------------------------------------
         // Assign the sum of oAddend1 and oAddend2 to oSum.  oSum should
         // be distinct from oAddend1 and oAddend2.  Return 0 (FALSE) if
         // an overflow occurred, and 1 (TRUE) otherwise.
@@ -127,7 +83,13 @@ BigInt_add:
         ldr     x0, [x0, LLENGTH]
         mov     x1, OADDEND2
         ldr     x1, [x1, LLENGTH]
-        bl      BigInt_larger
+
+        // BigInt_larger
+        cmp     x0, x1
+        bls     else1
+        b       if1
+else1:
+        mov     x0, x1
         mov     LSUMLENGTH, x0
 
         // if (oSum->lLength <= lSumLength) goto if2;
