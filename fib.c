@@ -274,7 +274,11 @@ static void boundaryTest(void)
 
           putchar('\n');
           BigInt_writeHex(stdout, oFirst);
+
+          putchar('\n');
           BigInt_writeHex(stdout, oSecond);
+
+          putchar('\n');
           BigInt_writeHex(stdout, oSum);
 
           printf("Boundary test 7a: ");
@@ -290,8 +294,14 @@ static void boundaryTest(void)
           fflush(stdout);
           putchar('\n');
           BigInt_writeHex(stdout, oFirst);
+
+          putchar('\n');
           BigInt_writeHex(stdout, oSecond);
+
+          putchar('\n');
           BigInt_writeHex(stdout, oSum);
+
+          putchar('\n');
           if (BigInt_add(oSecond, oFirst, oSum))
              BigInt_writeHex(stdout, oSum);
           else
