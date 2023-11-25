@@ -72,7 +72,7 @@ else1:
 
 if1:
         // Epilog & return lLarger;
-        ldr     x0, LLARGER
+        mov     x0, LLARGER
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
