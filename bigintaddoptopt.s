@@ -108,13 +108,13 @@ if2:
         // lIndex = 0;
         mov     LINDEX, #0
 
-        // ulCarry = 0;
-        adc     x0, xzr, xzr // Clear carry flag
-
         // ulSum = 0;
         mov     ULSUM, xzr
 
 startForLoop:
+
+        // ulCarry = 0;
+        adc     x0, xzr, xzr // Clear carry flag
 
         // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
