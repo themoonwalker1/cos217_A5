@@ -137,7 +137,7 @@ BigInt_add:
         mov     x1, OADDEND2
         ldr     x1, [x1, LLENGTH]
         bl      BigInt_larger
-        mov     LSUMLENGTH, x0,
+        mov     LSUMLENGTH, x0
 
         // if (oSum->lLength <= lSumLength) goto if2;
         mov     x0, OSUM
@@ -235,7 +235,7 @@ if4:
         // lIndex++;
         mov     x0, LINDEX
         add     x0, x0, #1
-        mov     LINDEX, x0,
+        mov     LINDEX, x0
 
         // goto startForLoop;
         b       startForLoop
@@ -276,7 +276,7 @@ if6:
         // lSumLength++;
         mov     x0, LSUMLENGTH
         add     x0, x0, #1
-        mov     LSUMLENGTH, x0,
+        mov     LSUMLENGTH, x0
 
 if5:
         // oSum->lLength = lSumLength;
