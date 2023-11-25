@@ -61,14 +61,14 @@ BigInt_larger:
         bls     else1
 
         // lLarger = lLength1;
-        str     LLENGTH1, LLARGER
+        mov     LLARGER, LLENGTH1
 
         // goto if1;
         b       if1
 
 else1:
         // lLarger = lLength2;
-        str     LLENGTH2, LLARGER
+        mov     LLARGER, LLENGTH2
 
 if1:
         // Epilog & return lLarger;
