@@ -108,16 +108,13 @@ if2:
         // lIndex = 0;
         mov     LINDEX, #0
 
-        adcs     x0, xzr, xzr // Clear carry flag
+        // ulCarry = 0;
+        adc     x0, xzr, xzr // Clear carry flag
+
+        // ulSum = 0;
+        mov     ULSUM, xzr
 
 startForLoop:
-
-        // ulSum = ulCarry;
-        mov     ULSUM, xzr
-        adcs    ULSUM, ULSUM, xzr // Move carry flag into ULSUM
-
-        // ulCarry = 0;
-        adcs    x0, xzr, xzr // Clear carry flag
 
         // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
@@ -136,16 +133,16 @@ startForLoop:
         // lIndex++;
         add     LINDEX, LINDEX, #1
 
-        adcs    x0, xzr, xzr // Clear carry flag
+        // ulSum = ulCarry; ulCarry = 0;
+        adc     ULSUM, xzr, xzr
 
         // if (lIndex < lSumLength) goto startForLoop;
         cmp     LINDEX, LSUMLENGTH
         blt     startForLoop
 
 endForLoop:
-        // if (ulCarry != 1) goto if5;
-        adc     x0, xzr, xzr
-        cmp     x0, #1
+        // if (ulSum != 1) goto if5;
+        cmp     ULSUM, #1
         bne     if5
 
         // if (lSumLength != MAX_DIGITS) goto if6;
