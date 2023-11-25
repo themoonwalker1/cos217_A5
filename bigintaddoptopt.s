@@ -154,25 +154,19 @@ if4:
         str     ULSUM, [x1, LINDEX, LSL #3]
 
         // lIndex++;
-        mov     x0, LINDEX
-        add     x0, x0, #1
-        mov     LINDEX, x0
+        add     LINDEX, LINDEX, #1
 
         // if (lIndex < lSumLength) goto startForLoop;
-        mov     x0, LINDEX
-        mov     x1, LSUMLENGTH
-        cmp     x0, x1
+        cmp     LINDEX, LSUMLENGTH
         blt     startForLoop
 
 endForLoop:
         // if (ulCarry != 1) goto if5;
-        mov     x0, ULCARRY
-        cmp     x0, #1
+        cmp     ULCARRY, #1
         bne     if5
 
         // if (lSumLength != MAX_DIGITS) goto if6;
-        mov     x0, LSUMLENGTH
-        cmp     x0, MAX_DIGITS
+        cmp     LSUMLENGTH, MAX_DIGITS
         bne     if6
 
         // Epilog & return FALSE;
@@ -188,25 +182,17 @@ endForLoop:
         add     sp, sp, ADD_STACK_BYTECOUNT
         ret
 
-
 if6:
         // oSum->aulDigits[lSumLength] = 1;
-        mov     x0, 1
-        mov     x1, OSUM
-        add     x1, x1, AULDIGITS
-        mov     x2, LSUMLENGTH
-        str     x0, [x1, x2, LSL #3]
+        add     x1, OSUM, AULDIGITS
+        str     1, [x1, LSUMLENGTH, LSL #3]
 
         // lSumLength++;
-        mov     x0, LSUMLENGTH
-        add     x0, x0, #1
-        mov     LSUMLENGTH, x0
+        add     LSUMLENGTH, LSUMLENGTH, #1
 
 if5:
         // oSum->lLength = lSumLength;
-        mov     x0, OSUM
-        mov     x1, LSUMLENGTH
-        str     x1, [x0, LLENGTH]
+        str     LSUMLENGTH, [OSUM, LLENGTH]
 
         // Epilog & return TRUE
         mov     x0, TRUE
