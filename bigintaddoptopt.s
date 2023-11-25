@@ -117,7 +117,7 @@ startForLoop:
         adcs    ULSUM, ULSUM, xzr // Move carry flag into ULSUM
 
         // ulCarry = 0;
-        adcs    xzr, xzr, xzr // Clear carry flag
+        adcs    x0, xzr, xzr // Clear carry flag
 
         // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
@@ -135,6 +135,8 @@ startForLoop:
 
         // lIndex++;
         add     LINDEX, LINDEX, #1
+
+        adcs    x0, xzr, xzr // Clear carry flag
 
         // if (lIndex < lSumLength) goto startForLoop;
         cmp     LINDEX, LSUMLENGTH
