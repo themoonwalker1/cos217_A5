@@ -39,10 +39,6 @@
         // Local Variable offsets
         LLARGER     .req x21 // Callee-saved
 
-        // Parameter offsets
-        LLENGTH2    .req x20 // Callee-saved
-        LLENGTH1    .req x19 // Callee-saved
-
 BigInt_larger:
         // Prolog
         sub     sp, sp, LARGER_STACK_BYTECOUNT
@@ -51,28 +47,21 @@ BigInt_larger:
         str     x20, [sp, 16]
         str     x21, [sp, 24]
 
-        mov     LLENGTH1, x0
-        mov     LLENGTH2, x1
-
         // long lLarger;
 
         // if (lLength1 <= lLength2) goto else1;
-        cmp     LLENGTH1, LLENGTH2
+        cmp     x0, x1
         bls     else1
-
-        // lLarger = lLength1;
-        mov     LLARGER, LLENGTH1
 
         // goto if1;
         b       if1
 
 else1:
         // lLarger = lLength2;
-        mov     LLARGER, LLENGTH2
+        mov     x0, x1
 
 if1:
         // Epilog & return lLarger;
-        mov     x0, LLARGER
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
