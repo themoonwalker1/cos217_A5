@@ -280,6 +280,7 @@ static void boundaryTest(void)
 
           putchar('\n');
           BigInt_writeHex(stdout, oSum);
+          putchar('\n');
 
           printf("Boundary test 7a: ");
           fflush(stdout);
