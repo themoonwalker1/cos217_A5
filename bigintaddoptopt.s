@@ -111,36 +111,23 @@ if2:
         // lIndex = 0;
         mov     LINDEX, #0
 
-        // if (lIndex >= lSumLength) goto endForLoop;
-        // cmp     LINDEX, LSUMLENGTH
-        // bge     endForLoop
-
 startForLoop:
 
         // ulSum = ulCarry;
-        mov     x0, ULCARRY
-        mov     ULSUM, x0
+        mov     ULSUM, ULCARRY
 
         // ulCarry = 0;
-        mov     x0, #0
-        mov     ULCARRY, x0
+        mov     ULCARRY, #0
 
         // ulSum += oAddend1->aulDigits[lIndex];
-        mov     x0, ULSUM
-        mov     x1, OADDEND1
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        add     x0, x0, x1
-        mov     ULSUM, x0
+        add     x1, OADDEND1, AULDIGITS
+        ldr     x1, [x1, LINDEX, LSL #3]
+        add     ULSUM, ULSUM, x1
 
         // if (ulSum >= oAddend1->aulDigits[lIndex]) goto if3;
-        mov     x0, ULSUM
-        mov     x1, OADDEND1
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        cmp     x0, x1
+        add     x1, OADDEND1, AULDIGITS
+        ldr     x1, [x1, LINDEX, LSL #3]
+        cmp     ULSUM, x1
         bhs     if3
 
         // ulCarry = 1;
