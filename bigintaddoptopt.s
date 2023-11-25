@@ -105,28 +105,30 @@ if1:
         bl      memset
 
 if2:
-        // ulCarry = 0;
-        mov     ULCARRY, #0
-
         // lIndex = 0;
         mov     LINDEX, #0
 
+        adcs     xzr, xzr, xzr // Clear carry flag
+
 startForLoop:
 
-        // ulSum = oAddend1->aulDigits[lIndex];
+        // ulSum = ulCarry;
+        mov     ULSUM, xzr
+        adcs    ULSUM, ULSUM, xzr // Move carry flag into ULSUM
+
+        // ulCarry = 0;
+        adcs    xzr, xzr, xzr // Clear carry flag
+
+        // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        adcs     ULSUM, ULSUM, x1
+        adcs    ULSUM, ULSUM, x1
 
-        // ulSum += oAddend2->aulDigits[lIndex] + ulCarry;
+        // ulSum += oAddend2->aulDigits[lIndex];
         add     x1, OADDEND2, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
         adcs    ULSUM, ULSUM, x1
 
-        // ulCarry = 1;
-        cset     ULCARRY, cs
-
-if4:
         // oSum->aulDigits[lIndex] = ulSum;
         add     x1, OSUM, AULDIGITS
         str     ULSUM, [x1, LINDEX, LSL #3]
@@ -140,8 +142,7 @@ if4:
 
 endForLoop:
         // if (ulCarry != 1) goto if5;
-        cmp     ULCARRY, #1
-        bne     if5
+        bcc     if5
 
         // if (lSumLength != MAX_DIGITS) goto if6;
         cmp     LSUMLENGTH, MAX_DIGITS
