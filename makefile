@@ -1,7 +1,7 @@
 GCC = gcc217
 #GCC = gcc
 
-all: fibc fibs
+all: fibc fibs fibso fibsoo
 
 clean:
 	rm -f *.o fibs fibc fibso fibsoo meminfo*.out *.gch
