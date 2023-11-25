@@ -85,11 +85,11 @@ BigInt_add:
         // BigInt_larger
         cmp     x0, x1
         bls     else1
+        mov     LSUMLENGTH, x0
         b       if1
 else1:
-        mov     x0, x1
+        mov     LSUMLENGTH, x1
 if1:
-        mov     LSUMLENGTH, x0
 
         // if (oSum->lLength <= lSumLength) goto if2;
         ldr     x0, [OSUM, LLENGTH]
@@ -142,7 +142,9 @@ startForLoop:
 
 endForLoop:
         // if (ulCarry != 1) goto if5;
-        bcc     if5
+        adc     x0, xzr, xzr
+        cmp     x0, #1
+        bne     if5
 
         // if (lSumLength != MAX_DIGITS) goto if6;
         cmp     LSUMLENGTH, MAX_DIGITS
