@@ -90,6 +90,7 @@ BigInt_add:
         b       if1
 else1:
         mov     x0, x1
+if1:
         mov     LSUMLENGTH, x0
 
         // if (oSum->lLength <= lSumLength) goto if2;
