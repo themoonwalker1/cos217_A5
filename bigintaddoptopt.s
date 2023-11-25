@@ -114,7 +114,7 @@ if2:
 startForLoop:
 
         // ulCarry = 0;
-        adc     x0, xzr, xzr // Clear carry flag
+        adcs     x0, xzr, xzr // Clear carry flag
 
         // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
