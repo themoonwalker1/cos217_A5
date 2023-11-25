@@ -134,7 +134,7 @@ startForLoop:
         add     LINDEX, LINDEX, #1
 
         // ulSum = ulCarry; ulCarry = 0;
-        adc     ULSUM, xzr, xzr
+        adcs     ULSUM, xzr, xzr
 
         // if (lIndex < lSumLength) goto startForLoop;
         cmp     LINDEX, LSUMLENGTH
