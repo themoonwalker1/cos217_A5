@@ -135,22 +135,17 @@ startForLoop:
         mov     ULCARRY, x0
 
         // ulSum += oAddend1->aulDigits[lIndex];
-        mov     x0, ULSUM
-        mov     x1, OADDEND1
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        add     x0, x0, x1
-        mov     ULSUM, x0
+        ldr     x0, OADDEND1
+        add     x1, x0, AULDIGITS
+        ldr     x2, [x1, LINDEX, LSL #3]
+        adcs    ULSUM, ULSUM, x2
 
         // if (ulSum >= oAddend1->aulDigits[lIndex]) goto if3;
-        mov     x0, ULSUM
-        mov     x1, OADDEND1
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        cmp     x0, x1
-        bhs     if3
+        ldr     x0, OADDEND1
+        add     x1, x0, AULDIGITS
+        ldr     x2, [x1, LINDEX, LSL #3]
+        adcs    x0, ULSUM, x2
+        bcs     if3
 
         // ulCarry = 1;
         mov     x0, #1
@@ -158,22 +153,17 @@ startForLoop:
 
 if3:
         // ulSum += oAddend2->aulDigits[lIndex];
-        mov     x0, ULSUM
-        mov     x1, OADDEND2
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        add     x0, x0, x1
-        mov     ULSUM, x0
+        ldr     x0, OADDEND2
+        add     x1, x0, AULDIGITS
+        ldr     x2, [x1, LINDEX, LSL #3]
+        adcs    ULSUM, ULSUM, x2
 
         // if (ulSum >= oAddend2->aulDigits[lIndex]) goto if4;
-        mov     x0, ULSUM
-        mov     x1, OADDEND2
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        cmp     x0, x1
-        bhs     if4
+        ldr     x0, OADDEND2
+        add     x1, x0, AULDIGITS
+        ldr     x2, [x1, LINDEX, LSL #3]
+        adcs    x0, ULSUM, x2
+        bcs     if4
 
         // ulCarry = 1;
         mov     x0, #1
@@ -181,20 +171,18 @@ if3:
 
 if4:
         // oSum->aulDigits[lIndex] = ulSum;
-        mov     x0, ULSUM
-        mov     x1, OSUM
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        str     x0, [x1, x2, LSL #3]
+        ldr     x0, OSUM
+        add     x1, x0, AULDIGITS
+        str     ULSUM, [x1, LINDEX, LSL #3]
 
         // lIndex++;
-        mov     x0, LINDEX
+        ldr     x0, LINDEX
         add     x0, x0, #1
         mov     LINDEX, x0
 
         // if (lIndex < lSumLength) goto startForLoop;
-        mov     x0, LINDEX
-        mov     x1, LSUMLENGTH
+        ldr     x0, LINDEX
+        ldr     x1, LSUMLENGTH
         cmp     x0, x1
         blt     startForLoop
 
