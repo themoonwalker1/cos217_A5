@@ -119,12 +119,12 @@ startForLoop:
         // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        adcs    ULSUM, ULSUM, x1
+        adc     ULSUM, ULSUM, x1
 
         // ulSum += oAddend2->aulDigits[lIndex];
         add     x1, OADDEND2, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        adcs    ULSUM, ULSUM, x1
+        adc     ULSUM, ULSUM, x1
 
         // oSum->aulDigits[lIndex] = ulSum;
         add     x1, OSUM, AULDIGITS
