@@ -185,7 +185,7 @@ endForLoop:
 if6:
         // oSum->aulDigits[lSumLength] = 1;
         add     x1, OSUM, AULDIGITS
-        str     1, [x1, LSUMLENGTH, LSL #3]
+        mov     [x1, LSUMLENGTH, LSL #3], #1
 
         // lSumLength++;
         add     LSUMLENGTH, LSUMLENGTH, #1
