@@ -43,6 +43,7 @@
         LSUMLENGTH  .req x25
         LINDEX      .req x24
         ULSUM       .req x23
+        ULCARRY     .req x22
 
         // Parameter offsets
         OSUM        .req x21
@@ -62,14 +63,16 @@ BigInt_add:
         str     x19, [sp, 8]
         str     x20, [sp, 16]
         str     x21, [sp, 24]
-        str     x23, [sp, 32]
-        str     x24, [sp, 40]
-        str     x25, [sp, 48]
+        str     x22, [sp, 32]
+        str     x23, [sp, 40]
+        str     x24, [sp, 48]
+        str     x25, [sp, 56]
 
         mov     OADDEND1, x0
         mov     OADDEND2, x1
         mov     OSUM, x2
 
+        // unsigned long ulCarry;
         // unsigned long ulSum;
         // long lIndex;
         // long lSumLength;
@@ -102,21 +105,50 @@ if1:
         bl      memset
 
 if2:
+        // ulCarry = 0;
+        mov     ULCARRY, #0
+
         // lIndex = 0;
         mov     LINDEX, #0
 
 startForLoop:
 
-        // ulSum = oAddend1->aulDigits[lIndex];
+        // ulSum = ulCarry;
+        mov     ULSUM, ULCARRY
+
+        // ulCarry = 0;
+        mov     ULCARRY, #0
+
+        // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        mov     ULSUM, x1
+        add     ULSUM, ULSUM, x1
 
-        // ulSum += oAddend2->aulDigits[lIndex] + ulCarry;
+        // if (ulSum >= oAddend1->aulDigits[lIndex]) goto if3;
+        add     x1, OADDEND1, AULDIGITS
+        ldr     x1, [x1, LINDEX, LSL #3]
+        cmp     ULSUM, x1
+        bhs     if3
+
+        // ulCarry = 1;
+        mov     ULCARRY, #1
+
+if3:
+        // ulSum += oAddend2->aulDigits[lIndex];
         add     x1, OADDEND2, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        adcs    ULSUM, ULSUM, x1
+        add     ULSUM, ULSUM, x1
 
+        // if (ulSum >= oAddend2->aulDigits[lIndex]) goto if4;
+        add     x1, OADDEND2, AULDIGITS
+        ldr     x1, [x1, LINDEX, LSL #3]
+        cmp     ULSUM, x1
+        bhs     if4
+
+        // ulCarry = 1;
+        mov     ULCARRY, #1
+
+if4:
         // oSum->aulDigits[lIndex] = ulSum;
         add     x1, OSUM, AULDIGITS
         str     ULSUM, [x1, LINDEX, LSL #3]
@@ -129,15 +161,20 @@ startForLoop:
         blt     startForLoop
 
 endForLoop:
+        // if (ulCarry != 1) goto if5;
+        cmp     ULCARRY, #1
+        bne     if5
+
         // if (lSumLength != MAX_DIGITS) goto if6;
         cmp     LSUMLENGTH, MAX_DIGITS
         bne     if6
 
         // Epilog & return FALSE;
         mov     x0, FALSE
-        ldr     x25, [sp, 48]
-        ldr     x24, [sp, 40]
-        ldr     x23, [sp, 32]
+        ldr     x25, [sp, 56]
+        ldr     x24, [sp, 48]
+        ldr     x23, [sp, 40]
+        ldr     x22, [sp, 32]
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
@@ -146,14 +183,24 @@ endForLoop:
         ret
 
 if6:
+        // oSum->aulDigits[lSumLength] = 1;
+        mov     x0, #1
+        add     x1, OSUM, AULDIGITS
+        str     x0, [x1, LSUMLENGTH, LSL #3]
+
+        // lSumLength++;
+        add     LSUMLENGTH, LSUMLENGTH, #1
+
+if5:
         // oSum->lLength = lSumLength;
         str     LSUMLENGTH, [OSUM, LLENGTH]
 
         // Epilog & return TRUE
         mov     x0, TRUE
-        ldr     x25, [sp, 48]
-        ldr     x24, [sp, 40]
-        ldr     x23, [sp, 32]
+        ldr     x25, [sp, 56]
+        ldr     x24, [sp, 48]
+        ldr     x23, [sp, 40]
+        ldr     x22, [sp, 32]
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
