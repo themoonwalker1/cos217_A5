@@ -79,45 +79,39 @@ BigInt_add:
 
         // lSumLength = BigInt_larger(oAddend1->lLength,
         //                            oAddend2->lLength);
+        ldr     x0, [OADDEND1, LLENGTH]
+        ldr     x1, [OADDEND2, LLENGTH]
 
         // BigInt_larger
-        cmp     [OADDEND1, LLENGTH], [OADDEND2, LLENGTH]
+        cmp     x0, x1
         bls     else1
-        mov     LSUMLENGTH, [OADDEND1, LLENGTH]
         b       if1
 else1:
-        mov     LSUMLENGTH, [OADDEND2, LLENGTH]
+        mov     x0, x1
 if1:
+        mov     LSUMLENGTH, x0
 
         // if (oSum->lLength <= lSumLength) goto if2;
-        mov     x0, OSUM
-        ldr     x0, [x0, LLENGTH]
-        mov     x1, LSUMLENGTH
-        cmp     x0, x1
+        ldr     x0, [OSUM, LLENGTH]
+        cmp     x0, LSUMLENGTH
         bls     if2
 
         // memset(oSum->aulDigits, 0,
         //        MAX_DIGITS * sizeof(unsigned long));
-        mov     x0, OSUM
-        add     x0, x0, AULDIGITS
+        add     x0, OSUM, AULDIGITS
         mov     x1, #0
-        mov     x2, MAX_DIGITS
-        lsl     x2, x2, 3
+        lsl     x2, MAX_DIGITS, 3
         bl      memset
 
 if2:
         // ulCarry = 0;
-        mov     x0, #0
-        mov     ULCARRY, x0
+        mov     ULCARRY, #0
 
         // lIndex = 0;
-        mov     x0, #0
-        mov     LINDEX, x0
+        mov     LINDEX, #0
 
         // if (lIndex >= lSumLength) goto endForLoop;
-        mov     x0, LINDEX
-        mov     x1, LSUMLENGTH
-        cmp     x0, x1
+        cmp     LINDEX, LSUMLENGTH
         bge     endForLoop
 
 startForLoop:
