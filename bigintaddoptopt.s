@@ -91,7 +91,7 @@ else1:
         mov     LSUMLENGTH, x1
         mov     x0, OADDEND2
         mov     OADDEND2, OADDEND1
-        mov     OADDEND2, x0
+        mov     OADDEND1, x0
 if1:
 
         // if (oSum->lLength <= lSumLength) goto if2;
