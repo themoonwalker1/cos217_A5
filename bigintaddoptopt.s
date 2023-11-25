@@ -89,9 +89,9 @@ BigInt_add:
         b       if1
 else1:
         mov     LSUMLENGTH, x1
-        mov     x0, OADDEND1
+        mov     x0, OADDEND2
         mov     OADDEND2, OADDEND1
-        mov     OADDEND1, x0
+        mov     OADDEND2, x0
 if1:
 
         // if (oSum->lLength <= lSumLength) goto if2;
@@ -122,12 +122,12 @@ startForLoop:
         // ulSum += oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        adc     ULSUM, ULSUM, x1
+        adcs    ULSUM, ULSUM, x1
 
         // ulSum += oAddend2->aulDigits[lIndex];
         add     x1, OADDEND2, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        adc     ULSUM, ULSUM, x1
+        adcs     ULSUM, ULSUM, x1
 
         // oSum->aulDigits[lIndex] = ulSum;
         add     x1, OSUM, AULDIGITS
