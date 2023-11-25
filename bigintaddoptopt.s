@@ -108,7 +108,7 @@ if2:
         // lIndex = 0;
         mov     LINDEX, #0
 
-        adc     xzr, xzr, xzr // Clear carry flag
+        adcs     x0, xzr, xzr // Clear carry flag
 
 startForLoop:
 
