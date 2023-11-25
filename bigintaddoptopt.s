@@ -82,16 +82,16 @@ BigInt_add:
         ldr     x0, [OADDEND1, LLENGTH]
         ldr     x1, [OADDEND2, LLENGTH]
 
-        // BigInt_larger
+        // BigInt_larger + TEMP FIX
         cmp     x0, x1
         bls     else1
         mov     LSUMLENGTH, x0
-        b       if1
-else1:
-        mov     LSUMLENGTH, x1
         mov     x0, OADDEND2
         mov     OADDEND2, OADDEND1
         mov     OADDEND1, x0
+        b       if1
+else1:
+        mov     LSUMLENGTH, x1
 if1:
 
         // if (oSum->lLength <= lSumLength) goto if2;
