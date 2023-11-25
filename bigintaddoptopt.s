@@ -100,7 +100,8 @@ if1:
         //        MAX_DIGITS * sizeof(unsigned long));
         add     x0, OSUM, AULDIGITS
         mov     x1, #0
-        lsl     x2, MAX_DIGITS, 3
+        mov     x2, MAX_DIGITS
+        lsl     x2, x2, 3
         bl      memset
 
 if2:
@@ -111,8 +112,8 @@ if2:
         mov     LINDEX, #0
 
         // if (lIndex >= lSumLength) goto endForLoop;
-        cmp     LINDEX, LSUMLENGTH
-        bge     endForLoop
+        // cmp     LINDEX, LSUMLENGTH
+        // bge     endForLoop
 
 startForLoop:
 
