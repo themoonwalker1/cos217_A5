@@ -79,19 +79,15 @@ BigInt_add:
 
         // lSumLength = BigInt_larger(oAddend1->lLength,
         //                            oAddend2->lLength);
-        mov     x0, OADDEND1
-        ldr     x0, [x0, LLENGTH]
-        mov     x1, OADDEND2
-        ldr     x1, [x1, LLENGTH]
 
         // BigInt_larger
-        cmp     x0, x1
+        cmp     [OADDEND1, LLENGTH], [OADDEND2, LLENGTH]
         bls     else1
+        mov     LSUMLENGTH, [OADDEND1, LLENGTH]
         b       if1
 else1:
-        mov     x0, x1
+        mov     LSUMLENGTH, [OADDEND2, LLENGTH]
 if1:
-        mov     LSUMLENGTH, x0
 
         // if (oSum->lLength <= lSumLength) goto if2;
         mov     x0, OSUM
