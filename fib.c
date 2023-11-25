@@ -480,13 +480,13 @@ int main(int argc, char *argv[])
 
    /* Perform boundary tests. */
 
-   /* boundaryTest(); */
+   boundaryTest();
 
    printf("------------------------------------------------\n");
    
    /* Perform stress tests. */
 
-   /* stressTest(); */
+   stressTest();
 
    printf("------------------------------------------------\n");
 
