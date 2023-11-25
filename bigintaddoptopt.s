@@ -113,40 +113,18 @@ if2:
 
 startForLoop:
 
-        // ulSum = ulCarry;
-        mov     ULSUM, ULCARRY
-
-        // ulCarry = 0;
-        mov     ULCARRY, #0
-
-        // ulSum += oAddend1->aulDigits[lIndex];
+        // ulSum = oAddend1->aulDigits[lIndex];
         add     x1, OADDEND1, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        add     ULSUM, ULSUM, x1
+        adcs     ULSUM, ULSUM, x1
 
-        // if (ulSum >= oAddend1->aulDigits[lIndex]) goto if3;
-        add     x1, OADDEND1, AULDIGITS
-        ldr     x1, [x1, LINDEX, LSL #3]
-        cmp     ULSUM, x1
-        bhs     if3
-
-        // ulCarry = 1;
-        mov     ULCARRY, #1
-
-if3:
-        // ulSum += oAddend2->aulDigits[lIndex];
+        // ulSum += oAddend2->aulDigits[lIndex] + ulCarry;
         add     x1, OADDEND2, AULDIGITS
         ldr     x1, [x1, LINDEX, LSL #3]
-        add     ULSUM, ULSUM, x1
-
-        // if (ulSum >= oAddend2->aulDigits[lIndex]) goto if4;
-        add     x1, OADDEND2, AULDIGITS
-        ldr     x1, [x1, LINDEX, LSL #3]
-        cmp     ULSUM, x1
-        bhs     if4
+        adcs    ULSUM, ULSUM, x1
 
         // ulCarry = 1;
-        mov     ULCARRY, #1
+        cset     ULCARRY, cs
 
 if4:
         // oSum->aulDigits[lIndex] = ulSum;
