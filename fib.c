@@ -263,34 +263,44 @@ static void boundaryTest(void)
       BigInt_free(oFirst);
    }
 
-   {  /* ffffffffffffffff0000000000000001 + ffffffffffffffff,
-         ffffffffffffffff + ffffffffffffffff0000000000000001 */
+       {  /* ffffffffffffffff0000000000000001 + ffffffffffffffff,
+             ffffffffffffffff + ffffffffffffffff0000000000000001 */
 
-      BigInt_T oFirst = createBigInt(0);
-      BigInt_T oSecond = createBigInt(ULONG_MAX);
-      BigInt_T oSum = createBigInt(0);
-      BigInt_assignFromHexStr(oFirst,
-         "ffffffffffffffff0000000000000001");
+          BigInt_T oFirst = createBigInt(0);
+          BigInt_T oSecond = createBigInt(ULONG_MAX);
+          BigInt_T oSum = createBigInt(0);
+          BigInt_assignFromHexStr(oFirst,
+             "ffffffffffffffff0000000000000001");
 
-      printf("Boundary test 7a: ");
-      fflush(stdout);
-      if (BigInt_add(oFirst, oSecond, oSum))
-         BigInt_writeHex(stdout, oSum);
-      else
-         printf("Addition overflow");
-      putchar('\n');
+          putchar('\n');
+          BigInt_writeHex(stdout, oFirst);
+          BigInt_writeHex(stdout, oSecond);
+          BigInt_writeHex(stdout, oSum);
 
-      printf("Boundary test 7b: ");
-      fflush(stdout);
-      if (BigInt_add(oSecond, oFirst, oSum))
-         BigInt_writeHex(stdout, oSum);
-      else
-         printf("Addition overflow");
-      putchar('\n');
+          printf("Boundary test 7a: ");
+          fflush(stdout);
+          if (BigInt_add(oFirst, oSecond, oSum))
+             BigInt_writeHex(stdout, oSum);
+          else
+             printf("Addition overflow");
+          putchar('\n');
 
-      BigInt_free(oSum);
-      BigInt_free(oSecond);
-      BigInt_free(oFirst);
+
+          printf("Boundary test 7b: ");
+          fflush(stdout);
+          putchar('\n');
+          BigInt_writeHex(stdout, oFirst);
+          BigInt_writeHex(stdout, oSecond);
+          BigInt_writeHex(stdout, oSum);
+          if (BigInt_add(oSecond, oFirst, oSum))
+             BigInt_writeHex(stdout, oSum);
+          else
+             printf("Addition overflow");
+          putchar('\n');
+
+          BigInt_free(oSum);
+          BigInt_free(oSecond);
+          BigInt_free(oFirst);
    }
 
    {  /* largest possible + 0, 0 + largest possible */
