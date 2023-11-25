@@ -1,0 +1,14 @@
+#!/bin/bash
+
+for n in {1..1000}; do
+    result_fibc=$(./fibc $n)
+    result_fibsoo=$(./fibsoo $n)
+
+    if [ "$result_fibc" -eq "$result_fibsoo" ]; then
+        echo "Test for n=$n: Passed"
+    else
+        echo "Test for n=$n: Failed"
+        echo "  ./fibc: $result_fibc"
+        echo "  ./fibsoo: $result_fibsoo"
+    fi
+done
