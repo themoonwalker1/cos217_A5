@@ -51,8 +51,8 @@ BigInt_larger:
         str     x20, [sp, 16]
         str     x21, [sp, 24]
 
-        mov     x0, LLENGTH1
-        mov     x1, LLENGTH2
+        mov     LLENGTH1, x0
+        mov     LLENGTH2, x1
 
         // long lLarger;
 
