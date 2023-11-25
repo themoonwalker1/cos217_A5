@@ -131,39 +131,27 @@ startForLoop:
         bhs     if3
 
         // ulCarry = 1;
-        mov     x0, #1
-        mov     ULCARRY, x0
+        mov     ULCARRY, #1
 
 if3:
         // ulSum += oAddend2->aulDigits[lIndex];
-        mov     x0, ULSUM
-        mov     x1, OADDEND2
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        add     x0, x0, x1
-        mov     ULSUM, x0
+        add     x1, OADDEND2, AULDIGITS
+        ldr     x1, [x1, LINDEX, LSL #3]
+        add     ULSUM, ULSUM, x1
 
         // if (ulSum >= oAddend2->aulDigits[lIndex]) goto if4;
-        mov     x0, ULSUM
-        mov     x1, OADDEND2
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        ldr     x1, [x1, x2, LSL #3]
-        cmp     x0, x1
+        add     x1, OADDEND2, AULDIGITS
+        ldr     x1, [x1, LINDEX, LSL #3]
+        cmp     ULSUM, x1
         bhs     if4
 
         // ulCarry = 1;
-        mov     x0, #1
-        mov     ULCARRY, x0
+        mov     ULCARRY, #1
 
 if4:
         // oSum->aulDigits[lIndex] = ulSum;
-        mov     x0, ULSUM
-        mov     x1, OSUM
-        add     x1, x1, AULDIGITS
-        mov     x2, LINDEX
-        str     x0, [x1, x2, LSL #3]
+        add     x1, OSUM, AULDIGITS
+        str     ULSUM, [x1, LINDEX, LSL #3]
 
         // lIndex++;
         mov     x0, LINDEX
