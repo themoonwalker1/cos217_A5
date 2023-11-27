@@ -37,7 +37,7 @@
         //--------------------------------------------------------------
 
         // Must be a multiple of 16
-        .equ    ADD_STACK_BYTECOUNT, 64
+        .equ    ADD_STACK_BYTECOUNT, 80
 
         // Local Variable offsets
         LSUMLENGTH  .req x25
