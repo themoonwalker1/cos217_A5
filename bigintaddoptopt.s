@@ -77,8 +77,11 @@ BigInt_add:
         str     x28, [sp, 80]
 
         mov     OADDEND1, x0
+        add     OAE1_AD, OADDEND1, AULDIGITS
         mov     OADDEND2, x1
+        add     OAE2_AD, OADDEND2, AULDIGITS
         mov     OSUM, x2
+        add     OSUM_AD, OSUM, AULDIGITS
 
         // unsigned long ulCarry;
         // unsigned long ulSum;
