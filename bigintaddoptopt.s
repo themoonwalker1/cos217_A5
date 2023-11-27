@@ -88,18 +88,25 @@ BigInt_add:
         ldr     x2, [x0, LLENGTH]
         ldr     x3, [x1, LLENGTH]
 
-        // BigInt_larger + TEMP FIX
+        // BigInt_larger
         cmp     x2, x3
         bls     else1
+
+        // lSumLength = larger_length
         mov     LSUMLENGTH, x2
 
-        mov     OADDEND2, x0
+        // oAddEnd1 = Smaller Number
+        // oAddEnd2 = Larger Number
         mov     OADDEND1, x1
+        mov     OADDEND2, x0
 
         b       if1
 else1:
+        // lSumLength = larger_length
         mov     LSUMLENGTH, x3
 
+        // oAddEnd1 = Smaller Number
+        // oAddEnd2 = Larger Number
         mov     OADDEND1, x0
         mov     OADDEND2, x1
 if1:
