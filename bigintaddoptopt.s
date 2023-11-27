@@ -113,14 +113,14 @@ if1:
         // memset(oSum->aulDigits, 0,
         //        MAX_DIGITS * sizeof(unsigned long));
         mov     x0, OSUM_AD
-        mov     x1, #0
+        mov     x1, xzr
         mov     x2, MAX_DIGITS
         lsl     x2, x2, 3
         bl      memset
 
 if2:
         // lIndex = 0;
-        mov     LINDEX, #0
+        mov     LINDEX, xzr
 
         // ulSum = 0;
         mov     ULSUM, xzr
