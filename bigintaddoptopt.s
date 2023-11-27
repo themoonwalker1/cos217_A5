@@ -134,10 +134,10 @@ if2:
         // ulSum = 0;
         mov     ULSUM, xzr
 
-startForLoop:
-
         // ulCarry = 0;
         adcs     x0, xzr, xzr // Clear carry flag
+
+startForLoop:
 
         // ulSum += oAddend1->aulDigits[lIndex];
         ldr     x1, [OAE1_AD, LINDEX, LSL #3]
