@@ -50,6 +50,11 @@
         OADDEND2    .req x20
         OADDEND1    .req x19
 
+        // Parameter Constants (aulDigits)
+        OSUM_AD     .req x28
+        OAE2_AD     .req x27
+        OAE1_AD     .req x26
+
         // BigInt_T struct offsets
         .equ    LLENGTH, 0
         .equ    AULDIGITS, 8
@@ -67,6 +72,9 @@ BigInt_add:
         str     x23, [sp, 40]
         str     x24, [sp, 48]
         str     x25, [sp, 56]
+        str     x26, [sp, 64]
+        str     x27, [sp, 72]
+        str     x28, [sp, 80]
 
         mov     OADDEND1, x0
         mov     OADDEND2, x1
@@ -154,6 +162,9 @@ endForLoop:
 
         // Epilog & return FALSE;
         mov     x0, FALSE
+        ldr     x28, [sp, 80]
+        ldr     x27, [sp, 72]
+        ldr     x26, [sp, 64]
         ldr     x25, [sp, 56]
         ldr     x24, [sp, 48]
         ldr     x23, [sp, 40]
@@ -180,6 +191,9 @@ if5:
 
         // Epilog & return TRUE
         mov     x0, TRUE
+        ldr     x28, [sp, 80]
+        ldr     x27, [sp, 72]
+        ldr     x26, [sp, 64]
         ldr     x25, [sp, 56]
         ldr     x24, [sp, 48]
         ldr     x23, [sp, 40]
