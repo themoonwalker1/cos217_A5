@@ -112,7 +112,7 @@ if1:
 
         // memset(oSum->aulDigits, 0,
         //        MAX_DIGITS * sizeof(unsigned long));
-        add     x0, OSUM, AULDIGITS
+        mov     x0, OSUM_AD
         mov     x1, #0
         mov     x2, MAX_DIGITS
         lsl     x2, x2, 3
@@ -131,18 +131,15 @@ startForLoop:
         adcs     x0, xzr, xzr // Clear carry flag
 
         // ulSum += oAddend1->aulDigits[lIndex];
-        add     x1, OADDEND1, AULDIGITS
-        ldr     x1, [x1, LINDEX, LSL #3]
+        ldr     x1, [OAE1_AD, LINDEX, LSL #3]
         adcs    ULSUM, ULSUM, x1
 
         // ulSum += oAddend2->aulDigits[lIndex];
-        add     x1, OADDEND2, AULDIGITS
-        ldr     x1, [x1, LINDEX, LSL #3]
+        ldr     x1, [OAE2_AD, LINDEX, LSL #3]
         adcs     ULSUM, ULSUM, x1
 
         // oSum->aulDigits[lIndex] = ulSum;
-        add     x1, OSUM, AULDIGITS
-        str     ULSUM, [x1, LINDEX, LSL #3]
+        str     ULSUM, [OSUM_AD, LINDEX, LSL #3]
 
         // lIndex++;
         add     LINDEX, LINDEX, #1
@@ -182,8 +179,7 @@ endForLoop:
 if6:
         // oSum->aulDigits[lSumLength] = 1;
         mov     x0, #1
-        add     x1, OSUM, AULDIGITS
-        str     x0, [x1, LSUMLENGTH, LSL #3]
+        str     x0, [OSUM_AD, LSUMLENGTH, LSL #3]
 
         // lSumLength++;
         add     LSUMLENGTH, LSUMLENGTH, #1
