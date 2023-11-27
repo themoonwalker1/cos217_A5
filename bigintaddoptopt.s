@@ -98,9 +98,8 @@ BigInt_add:
         bls     else1
         mov     LSUMLENGTH, x2
 
-        mov     x0, OADDEND2
-        mov     OADDEND2, OADDEND1
-        mov     OADDEND1, x0
+        mov     OADDEND2, x0
+        mov     OADDEND1, x1
 
         mov     x0, OAE2_AD
         mov     OAE2_AD, OAE1_AD
