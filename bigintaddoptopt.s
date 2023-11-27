@@ -103,7 +103,7 @@ BigInt_add:
         mov     OADDEND1, x0
 
         mov     x0, OAE2_AD
-        mov     OAE2_AD, OAE2_AD
+        mov     OAE2_AD, OAE1_AD
         mov     OAE1_AD, x0
 
         b       if1
