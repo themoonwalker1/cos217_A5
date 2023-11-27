@@ -140,12 +140,10 @@ startForLoop:
         adcs     x0, xzr, xzr // Clear carry flag
 
         // ulSum += oAddend1->aulDigits[lIndex];
-        ldr     x1, [OAE1_AD, LINDEX, LSL #3]
-        adcs    ULSUM, ULSUM, x1
+        adcs    ULSUM, ULSUM, [OAE1_AD, LINDEX, LSL #3]
 
         // ulSum += oAddend2->aulDigits[lIndex];
-        ldr     x1, [OAE2_AD, LINDEX, LSL #3]
-        adcs     ULSUM, ULSUM, x1
+        adcs     ULSUM, ULSUM, [OAE2_AD, LINDEX, LSL #3]
 
         // oSum->aulDigits[lIndex] = ulSum;
         str     ULSUM, [OSUM_AD, LINDEX, LSL #3]
