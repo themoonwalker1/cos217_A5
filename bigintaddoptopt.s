@@ -151,7 +151,7 @@ startForLoop:
         str     ULSUM, [OSUM_AD, LINDEX, LSL #3]
 
         // lIndex++;
-        add     LINDEX, LINDEX, #1
+        inc     LINDEX
 
         // ulSum = ulCarry; ulCarry = 0;
         adcs     ULSUM, xzr, xzr
