@@ -97,9 +97,15 @@ BigInt_add:
         cmp     x0, x1
         bls     else1
         mov     LSUMLENGTH, x0
+
         mov     x0, OADDEND2
         mov     OADDEND2, OADDEND1
         mov     OADDEND1, x0
+
+        mov     x0, OAE2_AD
+        mov     OAE2_AD, OAE2_AD
+        mov     OAE1_AD, x0
+
         b       if1
 else1:
         mov     LSUMLENGTH, x1
