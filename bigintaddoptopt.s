@@ -90,13 +90,13 @@ BigInt_add:
 
         // lSumLength = BigInt_larger(oAddend1->lLength,
         //                            oAddend2->lLength);
-        ldr     x0, [OADDEND1, LLENGTH]
-        ldr     x1, [OADDEND2, LLENGTH]
+        ldr     x2, [x0, LLENGTH]
+        ldr     x3, [x1, LLENGTH]
 
         // BigInt_larger + TEMP FIX
-        cmp     x0, x1
+        cmp     x2, x3
         bls     else1
-        mov     LSUMLENGTH, x0
+        mov     LSUMLENGTH, x2
 
         mov     x0, OADDEND2
         mov     OADDEND2, OADDEND1
@@ -108,7 +108,7 @@ BigInt_add:
 
         b       if1
 else1:
-        mov     LSUMLENGTH, x1
+        mov     LSUMLENGTH, x3
 if1:
 
         // if (oSum->lLength <= lSumLength) goto if2;
