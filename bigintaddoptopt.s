@@ -76,12 +76,7 @@ BigInt_add:
         str     x27, [sp, 72]
         str     x28, [sp, 80]
 
-        mov     OADDEND1, x0
-        add     OAE1_AD, OADDEND1, AULDIGITS
-        mov     OADDEND2, x1
-        add     OAE2_AD, OADDEND2, AULDIGITS
         mov     OSUM, x2
-        add     OSUM_AD, OSUM, AULDIGITS
 
         // unsigned long ulCarry;
         // unsigned long ulSum;
@@ -101,14 +96,16 @@ BigInt_add:
         mov     OADDEND2, x0
         mov     OADDEND1, x1
 
-        mov     x0, OAE2_AD
-        mov     OAE2_AD, OAE1_AD
-        mov     OAE1_AD, x0
-
         b       if1
 else1:
         mov     LSUMLENGTH, x3
+
+        mov     OADDEND1, x0
+        mov     OADDEND2, x1
 if1:
+        add     OAE1_AD, OADDEND1, AULDIGITS
+        add     OAE2_AD, OADDEND2, AULDIGITS
+        add     OSUM_AD, OSUM, AULDIGITS
 
         // if (oSum->lLength <= lSumLength) goto if2;
         ldr     x0, [OSUM, LLENGTH]
