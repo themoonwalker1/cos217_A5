@@ -137,27 +137,29 @@ if2:
         // ulCarry = 0;
         adcs     x0, xzr, xzr // Clear carry flag
 
+        lsl     x0, LSUMLENGTH, #3
+
 startForLoop:
 
         // ulSum += oAddend1->aulDigits[lIndex];
-        ldr     x1, [OAE1_AD, LINDEX, LSL #3]
+        ldr     x1, [OAE1_AD, LINDEX]
         adcs    ULSUM, ULSUM, x1
 
         // ulSum += oAddend2->aulDigits[lIndex];
-        ldr     x1, [OAE2_AD, LINDEX, LSL #3]
+        ldr     x1, [OAE2_AD, LINDEX]
         adcs     ULSUM, ULSUM, x1
 
         // oSum->aulDigits[lIndex] = ulSum;
-        str     ULSUM, [OSUM_AD, LINDEX, LSL #3]
+        str     ULSUM, [OSUM_AD, LINDEX]
 
         // lIndex++;
-        add     LINDEX, LINDEX, #1
+        add     LINDEX, LINDEX, #8
 
         // ulSum = ulCarry; ulCarry = 0;
         adcs     ULSUM, xzr, xzr
 
         // if (lIndex < lSumLength) goto startForLoop;
-        cmp     LINDEX, LSUMLENGTH
+        cmp     LINDEX, x0
         blt     startForLoop
 
 endForLoop:
