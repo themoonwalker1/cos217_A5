@@ -143,7 +143,7 @@ startForLoop:
 
         // ulSum += oAddend1->aulDigits[lIndex];
         ldr     x1, [OAE1_AD, LINDEX]
-        adcs    ULSUM, ULSUM, x1
+        adds    ULSUM, ULSUM, x1
 
         // ulSum += oAddend2->aulDigits[lIndex];
         ldr     x1, [OAE2_AD, LINDEX]
