@@ -135,7 +135,7 @@ if2:
         mov     ULSUM, xzr
 
         // ulCarry = 0;
-        adcs     x0, xzr, xzr // Clear carry flag
+        // adcs     x0, xzr, xzr // Clear carry flag
 
         lsl     x0, LSUMLENGTH, #3
 
