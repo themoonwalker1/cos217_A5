@@ -69,13 +69,17 @@ N/a
 Student 1: What is your assessment of the assignment? Was it helpful?
 Was it fun?
 
-
+The assignment was extremely interesting because it was my first actual
+project in assembly. Working on optimization in assembly itself was
+also intellectually challenging and fun. I would say that this is my
+favorite assignment out of all the assignments. I would definitely want
+to learn more about assembly after this assignment.
 
 ------------------------------------------------------------------------
 Student 2: What is your assessment of the assignment? Was it helpful?
 Was it fun?
 
-
+n/a
 
 ------------------------------------------------------------------------
 (optional) What information can you provide about your submission that
@@ -88,10 +92,9 @@ No bugs, however here are the edits I made for 2f:
 - Calculated the auldigits memory addresses before the for loop
 - made it so the smaller number is the oAddEnd1 and larger number is
   oAddEnd2. This allowed for a easier implementation of adcs
-- increased index by 8 (bytes) so I can just do a add instead of an
+- increased index by 8 (bytes) so I can just do an add instead of an
   LSL 3 along with an add at every loop (for getting the aulDigits value
   at a certain index).
--
 
 ------------------------------------------------------------------------
 What is your mywc program test plan?
@@ -159,7 +162,7 @@ Part 2d:  10.352220 seconds
 
 Part 2e:  7.002808 seconds
 
-Part 2f:  1.665423 seconds
+Part 2f:  1.660081 seconds
 
 
 
