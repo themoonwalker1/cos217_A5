@@ -43,7 +43,6 @@
         LSUMLENGTH  .req x25
         LINDEX      .req x24
         ULSUM       .req x23
-        ULCARRY     .req x22
 
         // Parameter offsets
         OSUM        .req x21
@@ -68,7 +67,6 @@ BigInt_add:
         str     x19, [sp, 8]
         str     x20, [sp, 16]
         str     x21, [sp, 24]
-        str     x22, [sp, 32]
         str     x23, [sp, 40]
         str     x24, [sp, 48]
         str     x25, [sp, 56]
@@ -163,7 +161,7 @@ startForLoop:
         blt     startForLoop
 
 endForLoop:
-        // if (ulSum != 1) goto if5;
+        // if (ulCarry != 1) goto if5;
         cmp     ULSUM, #1
         bne     if5
 
@@ -179,7 +177,6 @@ endForLoop:
         ldr     x25, [sp, 56]
         ldr     x24, [sp, 48]
         ldr     x23, [sp, 40]
-        ldr     x22, [sp, 32]
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
@@ -207,7 +204,6 @@ if5:
         ldr     x25, [sp, 56]
         ldr     x24, [sp, 48]
         ldr     x23, [sp, 40]
-        ldr     x22, [sp, 32]
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
