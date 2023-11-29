@@ -37,7 +37,7 @@
         //--------------------------------------------------------------
 
         // Must be a multiple of 16
-        .equ    ADD_STACK_BYTECOUNT, 80
+        .equ    ADD_STACK_BYTECOUNT, 64
 
         // Local Variable offsets
         LSUMLENGTH  .req x25
@@ -65,10 +65,10 @@ BigInt_add:
         str     x19, [sp, 8]
         str     x20, [sp, 16]
         str     x21, [sp, 24]
-        str     x23, [sp, 40]
-        str     x24, [sp, 48]
-        str     x25, [sp, 56]
-        str     x28, [sp, 80]
+        str     x23, [sp, 32]
+        str     x24, [sp, 40]
+        str     x25, [sp, 48]
+        str     x28, [sp, 56]
 
         mov     OSUM, x2
 
@@ -166,10 +166,10 @@ endForLoop:
 
         // Epilog & return FALSE;
         mov     x0, FALSE
-        ldr     x28, [sp, 80]
-        ldr     x25, [sp, 56]
-        ldr     x24, [sp, 48]
-        ldr     x23, [sp, 40]
+        ldr     x28, [sp, 56]
+        ldr     x25, [sp, 48]
+        ldr     x24, [sp, 40]
+        ldr     x23, [sp, 32]
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]
@@ -191,10 +191,10 @@ if5:
 
         // Epilog & return TRUE
         mov     x0, TRUE
-        ldr     x28, [sp, 80]
-        ldr     x25, [sp, 56]
-        ldr     x24, [sp, 48]
-        ldr     x23, [sp, 40]
+        ldr     x28, [sp, 56]
+        ldr     x25, [sp, 48]
+        ldr     x24, [sp, 40]
+        ldr     x23, [sp, 32]
         ldr     x21, [sp, 24]
         ldr     x20, [sp, 16]
         ldr     x19, [sp, 8]

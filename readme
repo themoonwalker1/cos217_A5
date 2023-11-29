@@ -82,7 +82,16 @@ Was it fun?
 will help your grader to grade it in the most favorable light? In
 particular, what bugs are in your submission?
 
+No bugs, however here are the edits I made for 2f:
 
+- The 3 edits specified in the specification
+- Calculated the auldigits memory addresses before the for loop
+- made it so the smaller number is the oAddEnd1 and larger number is
+  oAddEnd2. This allowed for a easier implementation of adcs
+- increased index by 8 (bytes) so I can just do a add instead of an
+  LSL 3 along with an add at every loop (for getting the aulDigits value
+  at a certain index).
+-
 
 ------------------------------------------------------------------------
 What is your mywc program test plan?
@@ -150,7 +159,7 @@ Part 2d:  10.352220 seconds
 
 Part 2e:  7.002808 seconds
 
-Part 2f:  2.331122 seconds
+Part 2f:  1.665423 seconds
 
 
 
