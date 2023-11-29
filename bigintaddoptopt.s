@@ -51,8 +51,6 @@
 
         // Parameter Constants (aulDigits)
         OSUM_AD     .req x28
-        OAE2_AD     .req x27
-        OAE1_AD     .req x26
 
         // BigInt_T struct offsets
         .equ    LLENGTH, 0
@@ -70,8 +68,6 @@ BigInt_add:
         str     x23, [sp, 40]
         str     x24, [sp, 48]
         str     x25, [sp, 56]
-        str     x26, [sp, 64]
-        str     x27, [sp, 72]
         str     x28, [sp, 80]
 
         mov     OSUM, x2
@@ -108,8 +104,6 @@ else1:
         mov     OADDEND1, x0
         mov     OADDEND2, x1
 if1:
-        add     OAE1_AD, OADDEND1, AULDIGITS
-        add     OAE2_AD, OADDEND2, AULDIGITS
         add     OSUM_AD, OSUM, AULDIGITS
 
         // if (oSum->lLength <= lSumLength) goto if2;
@@ -132,20 +126,21 @@ if2:
         // ulSum = 0;
         mov     ULSUM, xzr
 
-        // ulCarry = 0;
-        // adcs     x0, xzr, xzr // Clear carry flag
+        // so we can compare to the byte-position index
+        lsl     x1, LSUMLENGTH, #3
+        add     x2, OADDEND1, AULDIGITS
+        add     x3, OADDEND2, AULDIGITS
 
-        lsl     x0, LSUMLENGTH, #3
 
 startForLoop:
 
         // ulSum += oAddend1->aulDigits[lIndex];
-        ldr     x1, [OAE1_AD, LINDEX]
-        adds    ULSUM, ULSUM, x1
+        ldr     x0, [x2, LINDEX]
+        adds    ULSUM, ULSUM, x0
 
         // ulSum += oAddend2->aulDigits[lIndex];
-        ldr     x1, [OAE2_AD, LINDEX]
-        adcs     ULSUM, ULSUM, x1
+        ldr     x0, [x3, LINDEX]
+        adcs     ULSUM, ULSUM, x0
 
         // oSum->aulDigits[lIndex] = ulSum;
         str     ULSUM, [OSUM_AD, LINDEX]
@@ -157,7 +152,7 @@ startForLoop:
         adcs     ULSUM, xzr, xzr
 
         // if (lIndex < lSumLength) goto startForLoop;
-        cmp     LINDEX, x0
+        cmp     LINDEX, x1
         blt     startForLoop
 
 endForLoop:
@@ -172,8 +167,6 @@ endForLoop:
         // Epilog & return FALSE;
         mov     x0, FALSE
         ldr     x28, [sp, 80]
-        ldr     x27, [sp, 72]
-        ldr     x26, [sp, 64]
         ldr     x25, [sp, 56]
         ldr     x24, [sp, 48]
         ldr     x23, [sp, 40]
@@ -199,8 +192,6 @@ if5:
         // Epilog & return TRUE
         mov     x0, TRUE
         ldr     x28, [sp, 80]
-        ldr     x27, [sp, 72]
-        ldr     x26, [sp, 64]
         ldr     x25, [sp, 56]
         ldr     x24, [sp, 48]
         ldr     x23, [sp, 40]
