@@ -24,7 +24,7 @@ if [ "$#" -gt "0" ]; then
    exit 1
 fi
 
-for file in mywc*.txt
+for file in test_cases/mywc*.txt
 do
    ./testmywcdiff $file
 done
