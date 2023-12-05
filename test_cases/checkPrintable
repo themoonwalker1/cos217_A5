@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Function to check if a file contains only ASCII printable characters
+function check_ascii_printable {
+    if [[ -f "$1" ]]; then
+        # Use grep to find non-ASCII printable characters
+        non_ascii_chars=$(grep -o '[^ -~]' "$1")
+
+        if [[ -n "$non_ascii_chars" ]]; then
+            echo "File $1 contains non-ASCII printable characters:"
+            for char in $non_ascii_chars; do
+                printf "%s" "$char" | od -An -tx1
+            done
+        else
+            echo "File $1 is valid (contains only ASCII printable characters)."
+        fi
+    else
+        echo "File $1 not found."
+    fi
+}
+
+# Iterate through files matching the pattern mywc*.txt
+for file in mywc*.txt; do
+    check_ascii_printable "$file"
+done
